@@ -1,0 +1,48 @@
+import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as Mobile
+import com.kms.katalon.core.testobject.ConditionType
+import com.kms.katalon.core.testobject.RequestObject
+import com.kms.katalon.core.testobject.TestObject
+import com.kms.katalon.core.testobject.TestObjectProperty
+
+// Set up desired capabilities for Android device
+def desiredCaps = [
+  'app': 'path/to/Surplus.apk',
+  'deviceName': 'your_device_name',
+  'platformName': 'Android',
+  'appWaitActivity': 'com.surplus.MainActivity',
+  'noReset': true
+]
+
+// Open the application
+Mobile.startApplication(desiredCaps)
+
+// Ordering (Pemesanan)
+def itemToOrder = findTestObject('Page_Surplus/ItemToOrder') // Change the Test Object selector according to your application
+Mobile.tap(itemToOrder)
+def addToCartButton = findTestObject('Page_Surplus/AddToCartButton') // Change the Test Object selector
+Mobile.tap(addToCartButton)
+def cartButton = findTestObject('Page_Surplus/CartButton') // Change the Test Object selector
+Mobile.tap(cartButton)
+
+// Checkout
+def checkoutButton = findTestObject('Page_Surplus/CheckoutButton') // Change the Test Object selector
+Mobile.tap(checkoutButton)
+def shippingAddress = findTestObject('Page_Surplus/ShippingAddressField') // Change the Test Object selector
+Mobile.setText(shippingAddress, 'Your shipping address')
+def continueToPaymentButton = findTestObject('Page_Surplus/ContinueToPaymentButton') // Change the Test Object selector
+Mobile.tap(continueToPaymentButton)
+
+// Pembayaran
+def paymentMethod = findTestObject('Page_Surplus/PaymentMethod') // Change the Test Object selector
+Mobile.tap(paymentMethod)
+def paymentDetails = findTestObject('Page_Surplus/PaymentDetailsField') // Change the Test Object selector
+Mobile.setText(paymentDetails, 'Your payment details')
+def confirmPaymentButton = findTestObject('Page_Surplus/ConfirmPaymentButton') // Change the Test Object selector
+Mobile.tap(confirmPaymentButton)
+
+// Pengiriman
+def orderStatus = findTestObject('Page_Surplus/OrderStatus') // Change the Test Object selector
+Mobile.verifyElementText(orderStatus, 'Dalam Pengiriman', 10) // Verify order status is 'Dalam Pengiriman'
+
+// Close the application
+Mobile.closeApplication()
